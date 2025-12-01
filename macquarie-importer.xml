@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>MacquarieFireflyImporter</Name>
+  <Repository>ghcr.io/yourusername/macquarie-firefly-importer:latest</Repository>
+  <Registry>https://github.com/yourusername/macquarie-firefly-importer</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/yourusername/macquarie-firefly-importer/issues</Support>
+  <Project>https://github.com/yourusername/macquarie-firefly-importer</Project>
+  <Overview>
+    Macquarie Bank to Firefly III Auto-Importer.
+    Automates downloading CSVs from Macquarie Online Banking and importing them into Firefly III via the Data Importer.
+    Includes a built-in VNC viewer to allow manual login (MFA/Security) before the automation takes over.
+  </Overview>
+  <Category>Productivity: Tools:Utilities</Category>
+  <WebUI>http://[IP]:[PORT:3000]</WebUI>
+  <TemplateURL/>
+  <Icon>https://raw.githubusercontent.com/firefly-iii/firefly-iii/main/public/v1/images/firefly_iii_logo.png</Icon>
+  <ExtraParams>--shm-size=2g</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText/>
+  <DonateLink/>
+  <Description>
+    Automated Importer for Macquarie Bank.
+    Features:
+    - Headful Puppeteer with VNC (view the browser to log in manually).
+    - Configurable CSS Selectors to adapt to website changes.
+    - Automated date filtering and CSV downloading.
+    - Auto-upload to Firefly III Data Importer.
+  </Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>3000</HostPort>
+        <ContainerPort>3000</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+      <Port>
+        <HostPort>6080</HostPort>
+        <ContainerPort>6080</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/macquarie-importer/config</HostDir>
+      <ContainerDir>/config</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+    <Volume>
+      <HostDir>/mnt/user/appdata/macquarie-importer/downloads</HostDir>
+      <ContainerDir>/downloads</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment>
+    <Variable>
+      <Value>1280</Value>
+      <Name>SCREEN_WIDTH</Name>
+      <Mode/>
+    </Variable>
+    <Variable>
+      <Value>1024</Value>
+      <Name>SCREEN_HEIGHT</Name>
+      <Mode/>
+    </Variable>
+  </Environment>
+  <Config Name="Web UI Port" Target="3000" Default="3000" Mode="tcp" Description="Main Dashboard Port" Type="Port" Display="always" Required="true" Mask="false">3000</Config>
+  <Config Name="VNC Port" Target="6080" Default="6080" Mode="tcp" Description="noVNC Viewer Port (Required for manual interaction)" Type="Port" Display="always" Required="true" Mask="false">6080</Config>
+  <Config Name="Config Path" Target="/config" Default="/mnt/user/appdata/macquarie-importer/config" Mode="rw" Description="Persistent Configuration" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/macquarie-importer/config</Config>
+  <Config Name="Downloads Path" Target="/downloads" Default="/mnt/user/appdata/macquarie-importer/downloads" Mode="rw" Description="Temporary Download Location" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/macquarie-importer/downloads</Config>
+</Container>
